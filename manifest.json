@@ -1,0 +1,16 @@
+{
+  "manifest_version": 2,
+  "name": "Potential",
+  "version": "1.0.0",
+
+  "description": "New Tab Personal Dashboard",
+  "icons": { "128": "png/icon_128.png" },
+
+  "browser_action": {
+    "default_icon": "png/icon.png"
+  },
+  "permissions": ["tabs", "geolocation"],
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  }
+}
