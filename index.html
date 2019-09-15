@@ -8,27 +8,39 @@
   </head>
 
   <body>
-    <p>
-      <span id="xdate">Date</span>
-      <span id="time">Time</span>
+    <section class="date">
+      <div id="xdate">Date</div>
+    </section>
+
+    <section class="time">
+      <span id="time">Potential</span>
       <span id="ampm"></span>
-    </p>
+    </section>
 
-    <h1>
-      <span id="greeting">Hello</span>
+    <section class="hello">
+      <span id="greeting"></span>
       <span id="name" contenteditable="true"></span>
-      <span id="period">.</span>
-    </h1>
+    </section>
 
-    <p id="temperature">Retrieving weather data...</p>
-    <p id="heat-index">-</p>
-    <p id="summary">-</p>
-    <p id="icon">-</p>
+    <section class="weather">
+      <p id="icon">-</p>
+      <p id="temperature">Retrieving weather data...</p>
+      <p id="heat-index">-</p>
+      <p id="summary">-</p>
+    </section>
 
-    <span id="moonicon"></span>
-    <h2 id="moonphase">-</h2>
+    <section class="moon">
+      <span id="moonicon"></span>
+      <h2 id="moonphase">-</h2>
+    </section>
 
-    <h2 id="message">Uh oh... something went wrong.</h2>
+    <section class="msg-output">
+      <h2 id="message">Oof... something went wrong.</h2>
+      <p class="copy">
+        &copy; 2019 <span class="toki">jan [_uta_walo_en]</span>
+      </p>
+    </section>
+
     <script src="javascript/config.js"></script>
     <script src="javascript/potential.js"></script>
   </body>

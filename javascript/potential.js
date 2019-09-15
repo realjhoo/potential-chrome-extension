@@ -1,3 +1,7 @@
+//  ********** GLOBAL VARIABLES and CONSTANTS *****************
+const morning_background = "url('img/morning.jpeg')";
+const afternoon_background = "url('img/afternoon.jpeg')";
+const evening_background = "url('img/evening.jpeg')";
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function showDate() {
   const days = [
@@ -70,16 +74,16 @@ function setGreet() {
 
   if (hour < 12) {
     greeting.textContent = "Good morning, ";
-    document.body.style.backgroundImage = "url('img/morning.jpeg')";
-    document.body.style.color = "#ddd";
+    document.body.style.backgroundImage = morning_background;
+    // document.body.style.color = "#ddd";
   } else if (hour < 18) {
     greeting.textContent = "Good afternoon, ";
-    document.body.style.backgroundImage = "url('img/afternoon.jpeg')";
-    document.body.style.color = "#333";
+    document.body.style.backgroundImage = afternoon_background;
+    // document.body.style.color = "#ddd";
   } else {
     greeting.textContent = "Good evening, ";
-    document.body.style.backgroundImage = "url('img/evening.jpeg')";
-    document.body.style.color = "#ddd";
+    document.body.style.backgroundImage = evening_background;
+    // document.body.style.color = "#ddd";
   }
 }
 
@@ -95,6 +99,7 @@ function showPhase() {
     "Last Quarter Moon",
     "Waning Crescent Moon"
   ];
+
   let c = (e = jd = b = 0);
   let today = new Date(),
     dato = today.getDate(),
@@ -123,6 +128,7 @@ function showPhase() {
   document.getElementById("moonphase").innerHTML = phase[b];
   let moonIconString = `<img src='/svg/${phase[b]}.svg'</img>`;
   document.getElementById("moonicon").innerHTML = moonIconString;
+  console.log("Moon phase is: " + phase[b]);
 }
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
