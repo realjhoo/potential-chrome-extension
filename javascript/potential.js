@@ -2,6 +2,7 @@
 const morning_background = "url('img/morning.jpeg')";
 const afternoon_background = "url('img/afternoon.jpeg')";
 const evening_background = "url('img/evening.jpeg')";
+
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function showDate() {
   const days = [
@@ -59,7 +60,7 @@ function showTime() {
     hour = 12;
   }
 
-  min = (parseInt(min, 10) < 10 ? "0" : "") + min; // with leading zero
+  min = (parseInt(min, 10) < 10 ? "0" : "") + min; // add leading zero
   let fullTime = hour + ":" + min;
 
   document.getElementById("time").innerHTML = fullTime;
@@ -71,19 +72,21 @@ function setGreet() {
   let today = new Date(),
     hour = today.getHours(),
     greeting = document.getElementById("greeting");
+  let name = getName();
+
+  if (name == null) {
+    name = "";
+  }
 
   if (hour < 12) {
-    greeting.textContent = "Good morning, ";
+    greeting.textContent = `Good morning, ${name}`;
     document.body.style.backgroundImage = morning_background;
-    // document.body.style.color = "#ddd";
   } else if (hour < 18) {
-    greeting.textContent = "Good afternoon, ";
+    greeting.textContent = `Good afternoon, ${name}`;
     document.body.style.backgroundImage = afternoon_background;
-    // document.body.style.color = "#ddd";
   } else {
-    greeting.textContent = "Good evening, ";
+    greeting.textContent = `Good evening, ${name}`;
     document.body.style.backgroundImage = evening_background;
-    // document.body.style.color = "#ddd";
   }
 }
 
@@ -115,7 +118,7 @@ function showPhase() {
 
   c = 365.25 * year; //no. of days since year 0
   e = 30.6 * month; //no. of days this month
-  jd = c + e + dato - 694039.09; // current julian day - julian day for 1900.01.01 (a known full moon)
+  jd = c + e + dato - 694039.09; // current julian day - based on julian day for 1900.01.01 (a known full moon)
   jd /= 29.5305882; // divided by the lunar cycle, giving lunation rounded to nearest whole day
   b = parseInt(jd); // discard fraction
   jd -= b; // subtract the integer from the julian day, leaving the fractional part
@@ -128,10 +131,44 @@ function showPhase() {
   document.getElementById("moonphase").innerHTML = phase[b];
   let moonIconString = `<img src='/svg/${phase[b]}.svg'</img>`;
   document.getElementById("moonicon").innerHTML = moonIconString;
-  console.log("Moon phase is: " + phase[b]);
 }
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function floatingHolidays() {
+  let today = new Date(),
+    month = today.getMonth(),
+    day = today.getDate(),
+    week = Math.ceil(day / 7),
+    key = month + "," + week + "," + day;
+
+  var holidays = {
+    // keys are formatted as month,week,day
+    "0,2,1": "Martin Luther King, Jr. Day", //3rd Mon in Jan
+    "1,2,1": "President's Day", //3rd Mon in Feb
+    "2,1,0": "Daylight Savings Time Begins", //2nd Sun in April
+    "4,1,0": "Mother's Day", //2nd Sun in May
+    "4,-1,1": "Memorial Day", //Last Mon in May
+    "5,2,0": "Father's Day", //3rd Sun in Jun
+    "8,0,1": "Labor Day", //1st Mon in Sept
+    "9,1,1": "Columbus Day", //2nd Mon in Oct
+    "10,0,0": "Daylight Savings Time Ends", //1st Sun in Nov
+    "10,3,4": "Thanksgiving Day" //4th Thu in Nov
+  };
+
+  let holiday = holidays[key];
+
+  if (holiday) {
+    return holiday;
+  } else {
+    return false;
+  }
+}
+
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+// Astronomical solstices and equinoxes not yet supported
+// rewrite to use keys as in floatingHolidays() above
+// note: fixed and floating holidays and quote arrays could
+// be created as JSON file to make customizable
 function getMessage() {
   let today = new Date();
 
@@ -152,13 +189,15 @@ function getMessage() {
   } else if (today.getMonth() === 5 && today.getDate() === 21) {
     return "Ancestors Day";
   } else if (today.getMonth() === 5 && today.getDate() === 24) {
-    return "Penny the Dog Day";
+    return "Penny Jean Day";
   } else if (today.getMonth() === 6 && today.getDate() === 2) {
     return "Dad's Birthday";
   } else if (today.getMonth() === 6 && today.getDate() === 4) {
     return "Independence Day";
   } else if (today.getMonth() === 6 && today.getDate() === 6) {
     return "Happy Birthday!";
+  } else if (today.getMonth() === 6 && today.getDate() === 30) {
+    return "Honey Jean Day";
   } else if (today.getMonth() === 6 && today.getDate() === 31) {
     return "Lisa's Birthday";
   } else if (today.getMonth() === 7 && today.getDate() === 1) {
@@ -172,9 +211,9 @@ function getMessage() {
   } else if (today.getMonth() === 10 && today.getDate() === 11) {
     return "Veteran's Day";
   } else if (today.getMonth() === 11 && today.getDate() === 24) {
-    return "Yule Eve";
+    return "Christmas Eve";
   } else if (today.getMonth() === 11 && today.getDate() === 25) {
-    return "Yule";
+    return "Christmas";
   } else if (today.getMonth() === 11 && today.getDate() === 31) {
     return "New Year's Eve";
   } else {
@@ -185,6 +224,7 @@ function getMessage() {
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function rndMessage() {
   const randomMessages = [
+    "Democracy doesn't work",
     "You matter",
     "Never stop dreaming",
     "Be creative",
@@ -222,6 +262,7 @@ function rndMessage() {
     "Vigor is better than lifelessness",
     "Ancestry is better than rootlessness"
   ];
+
   let max = randomMessages.length;
   let rndNum = Math.floor(Math.random() * max);
   return randomMessages[rndNum];
@@ -229,11 +270,17 @@ function rndMessage() {
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function showMessage() {
-  let message = "";
-  message = getMessage();
+  let a_holiday = "",
+    message = "";
+  a_holiday = floatingHolidays();
 
-  if (message == "random") {
-    message = rndMessage();
+  if (a_holiday) {
+    message = a_holiday;
+  } else {
+    message = getMessage();
+    if (message === "random") {
+      message = rndMessage();
+    }
   }
 
   document.getElementById("message").innerHTML = message;
@@ -275,19 +322,24 @@ function showWeather() {
     });
   } else {
     // if geolocation does not work
-    document.getElementById("temperature").textContent =
+    document.getElementById("summary").textContent =
       "Unable to retrieve weather.";
   }
   setTimeout(showWeather, 300000);
 }
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+// This can be done differently... and better
 function getName() {
   let name = document.getElementById("name");
   if (localStorage.getItem("name") === null) {
     name.textContent = "[Enter Name]";
+    name.style.visibility = "visible";
   } else {
-    name.textContent = localStorage.getItem("name");
+    let stored_name = localStorage.getItem("name");
+    name.style.visibility = "hidden";
+    // name.textContent = localStorage.getItem("name");
+    return stored_name;
   }
 }
 
@@ -335,6 +387,6 @@ function main() {
   setTimeout(main, 5000);
 }
 
-// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+// =-=-=-=-=-=-= APP BEGINS HERE =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 initialize();
 main();

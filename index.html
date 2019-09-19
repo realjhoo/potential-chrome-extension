@@ -12,21 +12,22 @@
       <div id="xdate">Date</div>
     </section>
 
-    <section class="time">
-      <span id="time">Potential</span>
-      <span id="ampm"></span>
-    </section>
-
-    <section class="hello">
-      <span id="greeting"></span>
-      <span id="name" contenteditable="true"></span>
-    </section>
+    <div class="time-container">
+      <section class="time">
+        <span id="time">Potential</span>
+        <span id="ampm"></span>
+      </section>
+      <section>
+        <span id="greeting"></span>
+        <span id="name" contenteditable="true"></span>
+      </section>
+    </div>
 
     <section class="weather">
       <p id="icon">-</p>
-      <p id="temperature">Retrieving weather data...</p>
+      <p id="temperature">-</p>
       <p id="heat-index">-</p>
-      <p id="summary">-</p>
+      <p id="summary">Retrieving weather data...</p>
     </section>
 
     <section class="moon">
@@ -39,6 +40,7 @@
       <p class="copy">
         &copy; 2019 <span class="toki">jan [_uta_walo_en]</span>
       </p>
+      <span>Powered by Dark Sky”</span>
     </section>
 
     <script src="javascript/config.js"></script>
