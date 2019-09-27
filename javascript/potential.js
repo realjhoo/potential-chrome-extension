@@ -129,7 +129,7 @@ function showPhase() {
   }
 
   document.getElementById("moonphase").innerHTML = phase[b];
-  let moonIconString = `<img src='/svg/${phase[b]}.svg'</img>`;
+  let moonIconString = `<img src='svg/${phase[b]}.svg'</img>`;
   document.getElementById("moonicon").innerHTML = moonIconString;
 }
 
