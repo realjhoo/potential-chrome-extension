@@ -368,6 +368,37 @@ function changeMessage() {
   }
 }
 
+// =================================================================
+function getBeats() {
+  const beats = document.getElementById("beats");
+  const secondsPerBeat = 86.4;
+  let iTime = new Date();
+  let seconds = iTime.getUTCSeconds();
+  let minutes = iTime.getUTCMinutes();
+  let hours = iTime.getUTCHours();
+
+  // correct for UTC + 1 (BMT)
+  if (hours === 23) {
+    hours = 0;
+  } else {
+    hours++;
+  }
+
+  // convert the time to standard seconds
+  let BMTinSeconds = (hours * 60 + minutes) * 60 + seconds;
+
+  // convert standard seconds to internet time and set decimal to tenths
+  let internetTime = (BMTinSeconds / secondsPerBeat).toFixed(1);
+
+  // format internet time
+  internetTime = "@".concat(
+    "000".concat(internetTime).slice(internetTime.length - 2)
+  );
+
+  // show on page
+  beats.innerText = internetTime;
+}
+
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function initialize() {
   showMessage(); // set initial message
@@ -384,9 +415,11 @@ function main() {
   setGreet();
   showPhase();
   changeMessage();
+  getBeats();
   setTimeout(main, 5000);
 }
 
 // =-=-=-=-=-=-= APP BEGINS HERE =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+// initialize is called here so that it isnt looped by setTimeout
 initialize();
 main();
