@@ -315,7 +315,7 @@ function showWeather() {
 
           temp.innerHTML = "Temperature: " + parseInt(temperature) + "&#176;";
           heat_index.innerHTML =
-            "Heat index: " + parseInt(apparentTemperature) + "&#176;";
+            "Feels like: " + parseInt(apparentTemperature) + "&#176;";
           summ.textContent = "Currently, " + summary.toLowerCase();
           ico.innerHTML = weather_icon;
         });

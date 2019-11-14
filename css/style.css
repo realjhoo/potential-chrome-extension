@@ -36,6 +36,10 @@ body {
   padding-top: 12px;
 }
 
+#beats {
+  font-size: 1.4rem;
+}
+
 .time-container {
   display: flex;
   height: 100vh;
@@ -157,5 +161,6 @@ body {
 
   .date {
     font-size: 1.5rem;
+    padding-top: 4rem;
   }
 }
