@@ -2,6 +2,7 @@
   "manifest_version": 2,
   "name": "Potential",
   "version": "1.0.0",
+  "content_security_policy": "script-src 'self' 'sha256-5Q+c917RE3CodahAYXkAe2eNnS/H8ev3xSt4xYtwS8s='",
 
   "description": "New Tab Personal Dashboard",
   "icons": { "128": "png/icon_128.png" },
