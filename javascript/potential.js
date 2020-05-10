@@ -137,9 +137,10 @@ function showPhase() {
 function floatingHolidays() {
   let today = new Date(),
     month = today.getMonth(),
-    day = today.getDay(),
-    week = Math.ceil(day / 7) + 1,
-    key = month + "," + week + "," + day;
+          day = today.getDay(),
+          dato = today.getDate(),
+          week = Math.floor(dato / 7),
+          key = month + "," + week + "," + day;
 
   var holidays = {
     // keys are formatted as month,week,day
